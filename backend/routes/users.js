@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user'); // Import the User model
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
 
 // GET /users - Get all users
 router.get('/', async (req, res) => {

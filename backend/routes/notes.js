@@ -1,11 +1,11 @@
-// routes/notes.js
-
 const express = require('express');
 const router = express.Router();
 const Note = require('../models/note');
+const authenticateToken = require('../middleware/authenticateToken');
+
 
 // GET all notes from the currently logged-in user
-router.get('/user', async (req, res) => {
+router.get('/user', authenticateToken, async (req, res) => {
   try {
     const notes = await Note.find({ author: req.user._id });
     res.json(notes);
@@ -15,11 +15,11 @@ router.get('/user', async (req, res) => {
 });
 
 // POST a new note for the currently logged-in user
-router.post('/', async (req, res) => {
+router.post('/', authenticateToken, async (req, res) => {
   const note = new Note({
     title: req.body.title,
     content: req.body.content,
-    author: req.user._id, // figure this out later (takes the user ID from the currently logged-in user)
+    author: req.user._id, // fUser ID from the currently logged-in user
   });
   try {
     const newNote = await note.save();
@@ -32,7 +32,7 @@ router.post('/', async (req, res) => {
 // DELETE a note by ID
 router.delete('/:id', getNote, async (req, res) => {
   try {
-    await res.note.remove();
+    await Note.deleteOne({ _id: req.params.id });
     res.json({ message: 'Note deleted' });
   } catch (err) {
     res.status(500).json({ message: err.message });

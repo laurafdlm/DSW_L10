@@ -1,9 +1,7 @@
-// src/NotesPage.js
-
 import React from 'react';
-import './notesPage.css'; // Importa el archivo de estilos CSS
+import '../styles/Notes.css'; // Importa el archivo de estilos CSS
 
-class NotesPage extends React.Component {
+class Notes extends React.Component {
   render() {
     return (
       <div>
@@ -126,4 +124,4 @@ class NotesPage extends React.Component {
   }
 }
 
-export default NotesPage;
+export default Notes;

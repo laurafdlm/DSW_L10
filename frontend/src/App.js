@@ -1,18 +1,23 @@
 import React from 'react';
-import './App.css';
-import LoginForm from './LoginForm'; // Importa el componente LoginForm
-import NotesPage from './NotesPage'; // Importa el componente NotesPage
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './auth/AuthContext';
+import './styles/App.css';
+import ProtectedRoute from './auth/ProtectedRoute';
+import Login from './pages/Login';
+import Notes from './pages/Notes'; // Importa el componente Notes
+
+
 
 function App() {
   return (
-    <div className="App">
-      <div className="login-section">
-        <LoginForm /> {/* Renderiza el componente LoginForm aquí */}
-      </div>
-      <div className="notes-section">
-        <NotesPage /> {/* Renderiza el componente NotesPage aquí */}
-      </div>
-    </div>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/notes" element={<ProtectedRoute element={Notes} />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

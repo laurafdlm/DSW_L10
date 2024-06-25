@@ -1,4 +1,3 @@
-/* src/notesPage.css */
 
 body {
     font-family: Arial, sans-serif;
@@ -97,7 +96,7 @@ body {
   }
   
   .dropdown {
-    float: right;
+    /*float: right;    Removed as unnecessary for now*/
     position: relative;
     display: inline-block;
   }

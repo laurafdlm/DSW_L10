@@ -1,6 +1,7 @@
 require('dotenv').config(); // Load environment variables from .env file
 
 const express = require('express');
+const cors = require('cors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -12,6 +13,8 @@ const usersRouter = require('./routes/users');
 const notesRouter = require('./routes/notes');
 
 const app = express();
+// Enable all CORS requests
+app.use(cors());
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })

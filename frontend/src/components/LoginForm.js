@@ -1,18 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../auth/AuthContext';
 
 const LoginForm = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    try {
+      await login(username, password);
+      navigate('/notes');
+    } catch (error) {
+      console.error('Login failed:', error);
+      alert('Invalid credentials. Please try again.');
+    }
+  };
+
   return (
     <div style={styles.body}>
       <div className="login-container" style={styles.loginContainer}>
-        <form className="login-form" style={styles.loginForm}>
+        <form className="login-form" style={styles.loginForm} onSubmit={handleLogin}>
           <h2>Login</h2>
           <div className="form-group" style={styles.formGroup}>
-            <input type="text" id="username" name="username" required placeholder="Username" style={styles.input} />
+            <input
+              type="text"
+              id="username"
+              name="username"
+              required
+              placeholder="Username"
+              style={styles.input}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
             <span className="underline" style={styles.underline}></span>
             <span className="icon"><i className="fas fa-user"></i></span>
           </div>
           <div className="form-group" style={styles.formGroup}>
-            <input type="password" id="password" name="password" required placeholder="Password" style={styles.input} />
+            <input
+              type="password"
+              id="password"
+              name="password"
+              required
+              placeholder="Password"
+              style={styles.input}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
             <span className="underline" style={styles.underline}></span>
             <span className="icon"><i className="fas fa-lock"></i></span>
           </div>
